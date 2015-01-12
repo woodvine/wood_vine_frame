@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="baseSql">
+	<typeAlias alias="TbRole" type="com.wood.model.TbRole"/>
+	<typeAlias alias="TbUser" type="com.wood.model.TbUser"/>
+	<typeAlias alias="TbAuthority" type="com.wood.model.TbAuthority"/>
+	
+    <!-- 查询所有角色：用户授权时需要罗列角色 -->
+	<select id="queryAllRoles" parameterClass="TbRole" resultClass="TbRole">
+		SELECT id,role_name AS roleName,role_desc AS roleDesc,STATUS AS status
+		FROM tb_role
+	</select>
+	
+	<!-- 根据角色ID查询角色详细信息 -->
+	<select id="queryRoleById" parameterClass="int" resultClass="TbRole">
+		SELECT id,role_name AS roleName,role_desc AS roleDesc,STATUS AS status
+		FROM tb_role where id=#id#
+	</select>
+ 	
+ 	<!-- 查询某个用户的操作权限列表：根据用户的角色ID -->
+ 	<select id="queryAuthorityByRoleId" parameterClass="int" resultClass="TbAuthority">
+ 		SELECT 	id, 
+		authority_desc as authorityDesc, 
+		authority_name as authorityName, 
+		authority_url as authorityUrl,  
+		t_order as typeOrder, 
+		TYPE as type, 
+		parent_id as parentId
+ 		FROM tb_role_authority  AS a LEFT JOIN tb_authority AS b 
+ 		ON a.authority_id=b.id WHERE a.role_id=#roleId#
+ 		order by t_order
+ 	</select>
+ 	
+ 	<!-- 根据用户登陆名称查找用户信息：用户登录时使用 -->
+ 	<select id="queryUserByName" parameterClass="string" resultClass="TbUser">
+ 		SELECT 	id, 
+		login_name AS loginName, 
+		user_name AS userName, 
+		user_pwd AS userPwd, 
+		pic_url AS picUrl, 
+		email , 
+		nickname , 
+		STATUS AS status, 
+		role_id AS roleId, 
+		FROM_UNIXTIME(create_time) AS createTime, 
+		FROM_UNIXTIME(last_login_time) AS lastLoginTime
+		FROM tb_user where login_name=#loginName# LIMIT 1
+ 	</select>
+ 	
+ 	<!-- 根据用户登陆名称判断用户是否存在 ：用户注册时校验-->
+ 	<select id="isUserExist" parameterClass="string" resultClass="int">
+ 		SELECT count(*)
+		FROM tb_user where login_name=#loginName#
+ 	</select>
+ 	
+ 	<!-- 密码修改 -->
+ 	<update id="updateUserPwd" parameterClass="TbUser">
+ 		UPDATE tb_user SET role_id=#userPwd# 
+ 		where id=#id#
+ 	</update>
+ 	
+ 	<!-- 登陆时间修改 -->
+ 	<update id="updateUserLogintime" parameterClass="TbUser">
+ 		UPDATE tb_user SET last_login_time=UNIX_TIMESTAMP(#lastLoginTime#) 
+ 		where id=#id#
+ 	</update>
+ 	
+ 	<!-- 用户角色修改 -->
+ 	<update id="updateUserRoleId" parameterClass="TbUser">
+ 		UPDATE tb_user SET user_pwd=#roleId# 
+ 		where id=#id#
+ 	</update>
+ 	
+ 	<!-- 查询用户总记录数 -->
+ 	<select id="queryUserCount" parameterClass="TbUser" resultClass="int">
+ 	    SELECT 	count(*) FROM tb_user where 1=1
+ 	</select>
+ 	
+ 	<!-- 分页查询用户信息 -->
+ 	<select id="queryUserByPage" parameterClass="TbUser" resultClass="TbUser">
+ 	    SELECT 	id, 
+		login_name AS loginName, 
+		user_name AS userName, 
+		user_pwd AS userPwd, 
+		pic_url AS picUrl, 
+		email , 
+		nickname , 
+		STATUS AS status, 
+		role_id AS roleId, 
+		FROM_UNIXTIME(create_time) AS createTime, 
+		FROM_UNIXTIME(last_login_time) AS lastLoginTime
+		FROM tb_user 
+		where 1=1
+		LIMIT #rowStart#,#pageSize#
+ 	</select>
+ 	
+ 	<!-- addUser -->
+ 	<insert id="addUser">
+ 		INSERT INTO tb_user 
+	(login_name, user_name, user_pwd, nickname, pic_url, email, STATUS, role_id, create_time, last_login_time)
+	VALUES(#loginName#, #userName#, #userPwd#, #nickname#, #picUrl#, #email#, #status#, #roleId#, UNIX_TIMESTAMP(),UNIX_TIMESTAMP())
+ 	</insert>
+</sqlMap> 
