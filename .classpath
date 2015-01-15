@@ -41,5 +41,15 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-orm-3.2.0.RELEASE.jar" sourcepath="E:/maven/apache-maven-3.1.0/m2/repository/org/springframework/spring-orm/3.2.0.RELEASE/spring-orm-3.2.0.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web-3.2.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-3.2.0.RELEASE.jar" sourcepath="E:/maven/apache-maven-3.1.0/m2/repository/org/springframework/spring-webmvc/3.2.0.RELEASE/spring-webmvc-3.2.0.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasper-el.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasper.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-context-3.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-jdbc-3.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-oxm-3.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-tx-3.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jdom.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/Qrcode_swetake.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

@@ -11,5 +11,7 @@ package com.wood.util;
  */
 public class SystemConstant {
 	public static final String CURRENT_USER = "currentUser";
-
+	
+	public static final String APP_ID = "";
+	public static final String APP_SECRET = "";
 }

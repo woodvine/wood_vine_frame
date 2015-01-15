@@ -9,7 +9,7 @@
 	</head>
 	<frameset rows="100,*,80" border="0" frameSpacing="0" frameBorder="0">
 	<frame id="header"    name="header"    scrolling="no" noresize src="header" /> 
-	<frame id="container" name="container" scrolling="yes" noresize src="#" /> 
+	<frame id="container" name="container" scrolling="yes" noresize src="" /> 
 	<frame id="footer"    name="footer"    scrolling="no" noresize src="footer" />
 	<noframes>
 		<body>

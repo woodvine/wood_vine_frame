@@ -106,7 +106,12 @@ function getRole(code){
 	return val;
 }
 
-String.prototype.isEmail = function()
-{
-	return /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test(this);
-};
+	/**
+	 * 为什么在这个方法之后定义的function就调用不到了呢？？？
+	 * 害的我只能把方法都放在它的前面。。。
+	 * @returns
+	 */
+	String.prototype.isEmail = function()
+	{
+		return /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test(this);
+	};

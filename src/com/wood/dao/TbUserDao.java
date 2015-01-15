@@ -1,6 +1,7 @@
 package com.wood.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -131,13 +132,13 @@ public class TbUserDao  extends SqlMapClientDaoSupport{
 	 * @param user
 	 * @return
 	 */
-	public boolean updateUserPwd(TbUser user) {
+	public boolean updateUser(TbUser user) {
 		if(user==null){
 			return false;
 		}
 		
 		try {
-			this.getSqlMapClientTemplate().update("baseSql.updateUserPwd",user);
+			this.getSqlMapClientTemplate().update("baseSql.updateUser",user);
 			return true;
 		} catch (Exception e) {
 			logger.error("TbUserDao updateUserPwd error", e);
@@ -162,5 +163,9 @@ public class TbUserDao  extends SqlMapClientDaoSupport{
 			logger.error("TbUserDao updateUserLogintime error", e);
 			return false;
 		}
+	}
+	
+	public Map<String,String> queryAboutMe(){
+		return (Map)this.getSqlMapClientTemplate().queryForObject("baseSql.queryAboutMe");
 	}
 }

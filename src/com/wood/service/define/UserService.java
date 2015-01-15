@@ -19,7 +19,8 @@ import com.wood.pojo.ActionResponse;
 public interface UserService {
    public ActionResponse login(String loginName,String userPwd);
    public ActionResponse register(TbUser user);
-   public ActionResponse modifyPwd(TbUser user);
+   public ActionResponse modifyUserInfo(TbUser user);
    public ActionResponse queryByPage(TbUser user);
    public ActionResponse queryAuthority(TbUser user);
+   
 }

@@ -54,20 +54,30 @@
  	</select>
  	
  	<!-- 密码修改 -->
- 	<update id="updateUserPwd" parameterClass="TbUser">
- 		UPDATE tb_user SET role_id=#userPwd# 
+ 	<update id="updateUser" parameterClass="TbUser">
+ 		UPDATE tb_user SET id=#id#
+ 		<isNotEmpty  prepend="," property="nickname">
+	 		  nickname =#nickname#
+        </isNotEmpty >
+ 		<isNotEmpty  prepend="," property="userPwd">
+	 		  user_pwd =#userPwd#
+        </isNotEmpty >
+ 		<isNotEmpty  prepend="," property="picUrl">
+	 		  pic_url =#picUrl#
+        </isNotEmpty >
+ 		<isNotNull  prepend="," property="status">
+	 		  STATUS =#status#
+        </isNotNull >
+ 		<isNotNull  prepend="," property="roleId">
+	 		  role_id =#roleId#
+        </isNotNull >
+ 		
  		where id=#id#
  	</update>
  	
  	<!-- 登陆时间修改 -->
  	<update id="updateUserLogintime" parameterClass="TbUser">
  		UPDATE tb_user SET last_login_time=UNIX_TIMESTAMP(#lastLoginTime#) 
- 		where id=#id#
- 	</update>
- 	
- 	<!-- 用户角色修改 -->
- 	<update id="updateUserRoleId" parameterClass="TbUser">
- 		UPDATE tb_user SET user_pwd=#roleId# 
  		where id=#id#
  	</update>
  	
@@ -91,6 +101,9 @@
 		FROM_UNIXTIME(last_login_time) AS lastLoginTime
 		FROM tb_user 
 		where 1=1
+		<isNotEmpty prepend=" and " property="userName">
+			user_name like '%$userName$%'
+		</isNotEmpty>
 		LIMIT #rowStart#,#pageSize#
  	</select>
  	
@@ -100,4 +113,18 @@
 	(login_name, user_name, user_pwd, nickname, pic_url, email, STATUS, role_id, create_time, last_login_time)
 	VALUES(#loginName#, #userName#, #userPwd#, #nickname#, #picUrl#, #email#, #status#, #roleId#, UNIX_TIMESTAMP(),UNIX_TIMESTAMP())
  	</insert>
+ 	
+ 	<select id="queryAboutMe" resultClass="java.util.HashMap">
+		SELECT 	 
+		NAME as name, 
+		birthday as birthday, 
+		hometown as hometown, 
+		graduate_college as college, 
+		skill, 
+		hobby, 
+		telephone, 
+		blog_url as blogUrl,
+		introduction 
+		FROM tb_about_me LIMIT 1
+ 	</select>
 </sqlMap> 

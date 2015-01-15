@@ -2,7 +2,8 @@
 SQLyog 企业版 - MySQL GUI v8.14 
 MySQL - 5.5.37-log : Database - wood_vine
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -36,7 +37,7 @@ CREATE TABLE `tb_about_me` (
 
 /*Data for the table `tb_about_me` */
 
-insert  into `tb_about_me`(`id`,`name`,`birthday`,`hometown`,`graduate_college`,`skill`,`hobby`,`telephone`,`blog_url`,`introduction`) values (1,'WoodWang','1988-11-21','谷城','武汉工业学院','java','乒乓球','010-55656','http://blog.csdn.net/wojiushiwo945you','觉悟吧，少年!——认真编码，认真生活！');
+insert  into `tb_about_me`(`id`,`name`,`birthday`,`hometown`,`graduate_college`,`skill`,`hobby`,`telephone`,`blog_url`,`introduction`) values (1,'WoodWang','1988-09-21','谷城','武汉工业学院','java','乒乓球','010-55656','http://blog.csdn.net/wojiushiwo945you','觉悟吧，少年!——认真编码，认真生活！');
 
 /*Table structure for table `tb_authority` */
 
@@ -55,7 +56,7 @@ CREATE TABLE `tb_authority` (
 
 /*Data for the table `tb_authority` */
 
-insert  into `tb_authority`(`id`,`authority_desc`,`authority_name`,`authority_url`,`t_order`,`type`,`parent_id`) values (1,'用户管理，启用、禁用用户','用户管理','/userManage',1,1,NULL),(2,'权限控制，给用户分配权限','权限控制','/authorityManage',2,1,NULL),(3,'内容管理，个人日记等','碎碎叨叨','/contentManage',3,1,NULL),(4,'我观天气，天气预报链接','今日天气','/weatherGet',4,1,NULL),(5,'关于阿木，网站开发者个人简介','关于阿木','/aboutMe',5,1,NULL),(6,'叨叨英语','叨叨英语','/dailyEnglish',6,1,3),(7,'我爱记单词','单词本','/vocabulary',7,1,3),(8,'近日备忘','近日备忘','/remind',8,1,3),(9,'心上的时光','心上的时光','/memory',9,1,3);
+insert  into `tb_authority`(`id`,`authority_desc`,`authority_name`,`authority_url`,`t_order`,`type`,`parent_id`) values (1,'首页','首页','introduce',1,1,NULL),(2,'加入WoodVine','加入WoodVine','toRegister',2,1,NULL),(3,'用户管理','用户管理','userManage',3,1,NULL),(4,'权限控制:给用户分配权限','权限控制','authorityManage',4,1,NULL),(5,'内容管理：网站基本功能（日志、备忘）','碎碎叨叨','contentManage',5,1,NULL),(6,'我观天气：天气预报链接','今日天气','weatherGet',6,1,NULL),(7,'关于阿木，网站开发者个人简介','关于阿木','aboutMe',7,1,NULL),(8,'叨叨英语','叨叨英语','dailyEnglish',2,1,5),(9,'我爱记单词','我爱记单词','vocabulary',3,1,5),(10,'心上的时光','心上的时光','memory',4,1,5);
 
 /*Table structure for table `tb_daily_english` */
 
@@ -104,7 +105,7 @@ CREATE TABLE `tb_role` (
 
 /*Data for the table `tb_role` */
 
-insert  into `tb_role`(`id`,`role_name`,`role_desc`,`status`) values (1,'admin','系统管理员',1),(2,'audit','内容审计',1),(3,'user','普通用户',1);
+insert  into `tb_role`(`id`,`role_name`,`role_desc`,`status`) values (1,'admin','系统管理员',1),(2,'audit','内容审计',1),(3,'user','普通用户',1),(4,'wander','游客',1);
 
 /*Table structure for table `tb_role_authority` */
 
@@ -117,7 +118,7 @@ CREATE TABLE `tb_role_authority` (
 
 /*Data for the table `tb_role_authority` */
 
-insert  into `tb_role_authority`(`role_id`,`authority_id`) values (1,1),(1,2),(1,4),(1,5),(3,3),(3,4),(3,6),(3,7),(3,8),(3,9);
+insert  into `tb_role_authority`(`role_id`,`authority_id`) values (1,1),(1,3),(1,4),(3,1),(3,6),(3,7),(3,8),(3,9),(3,10),(4,2),(4,1),(1,6),(1,7);
 
 /*Table structure for table `tb_user` */
 
@@ -137,9 +138,11 @@ CREATE TABLE `tb_user` (
   `last_login_time` int(11) DEFAULT NULL COMMENT '上次登陆时间:Unix时间11位的整数',
   PRIMARY KEY (`id`),
   KEY `create_index` (`create_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_user` */
+
+insert  into `tb_user`(`id`,`login_name`,`user_name`,`user_pwd`,`nickname`,`pic_url`,`email`,`status`,`role_id`,`create_time`,`last_login_time`) values (1,'admin','admin','123456','admin',NULL,'admin@126.com',1,1,1420703513,1421118814),(2,'test','test','123456','test',NULL,'test@126.com',1,3,1420703513,1421118677),(3,'audit','audit','123456','audit',NULL,'audit@126.com',1,2,1420703513,1420703513);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

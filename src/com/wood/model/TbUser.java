@@ -1,8 +1,6 @@
 package com.wood.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Date;
 
 import com.wood.pojo.PaginationBean;
 

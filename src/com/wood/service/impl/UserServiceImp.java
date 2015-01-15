@@ -70,9 +70,9 @@ public class UserServiceImp implements UserService{
 	}
 
 	@Override
-	public ActionResponse modifyPwd(TbUser user) {
+	public ActionResponse modifyUserInfo(TbUser user) {
 		ActionResponse response = new ActionResponse();
-		userDao.updateUserPwd(user);
+		userDao.updateUser(user);
 		response.setStatus(true);
 		return response;
 	}

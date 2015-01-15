@@ -21,6 +21,7 @@
 				type : 'POST',
 				url : path+'queryUsers', //通过url传递name参数
 				data : {
+					    userName:$("#userName").val(),
 						page:_currentPage,
 						pageSize:_pageSize
 					},
@@ -61,7 +62,7 @@
 					content+="<td>"+formatStatus(user.status,1)+"</td>";
 					content+="<td>"+formatValue(user.createTime)+"</td>";
 					content+="<td>"+formatValue(user.lastLoginTime)+"</td>";
-					content+='<td><a href="#" class="ico del">'+formatStatus(user.status,2)+'</a><a href="#" class="ico edit">重置密码</a></td>';
+					content+='<td>'+formatOperation(user)+'</td>';
 					content+="</tr>";
 				}
 			}
@@ -92,6 +93,66 @@
 				}
 			}
 		}
+		
+		//操作连接拼接
+		function formatOperation(user){
+			var status = user.status
+			var statusTable = formatStatus(status,2);
+			var str = '';
+			if(status==0){//启用
+				 str += "<a class='ico del' href='javascript:updateStatus(1,\""+user.id+"\");'>";
+			}else{//禁用
+				 str += "<a class='ico del' href='javascript:updateStatus(0,\""+user.id+"\");'>";
+			}
+			str+=statusTable+"</a>";
+			str+="<a class='ico edit' href='javascript:resetPwd(\""+user.id+"\");'>重置密码</a>";
+			return str;
+		}
+		
+		function updateStatus(status,id){
+			$.ajax({
+				type : 'POST',
+				url : path+'modifyUserInfo', //通过url传递name参数
+				data : {
+						id:id,
+						status:status
+					},
+				dataType : 'json',
+				success:function(data){
+					if(data.status){
+						queryUsers();
+					}else{
+						alert(data.description);
+					}
+				},
+				error:function(e){
+					alert("Net error ,try later.")
+				}
+			});
+		}
+		
+		function resetPwd(id){
+			$.ajax({
+				type : 'POST',
+				url : path+'modifyUserInfo', //通过url传递name参数
+				data : {
+						id:id,
+						userPwd:'123456'
+					},
+				dataType : 'json',
+				success:function(data){
+					if(data.status){
+						queryUsers();
+					}else{
+						alert(data.description);
+					}
+				},
+				error:function(e){
+					alert("Net error ,try later.")
+				}
+			});
+		}
+		
 	</script>
 	
 	<body>
@@ -99,7 +160,12 @@
 				<div class="box">
 					<!-- Box Head -->
 					<div class="box-head">
-						<h2 class="left">Current Users</h2>
+						<h2 class="left">当前用户</h2>
+						<div class="right">
+							<label>用户名</label>
+							<input type="text" class="field small-field" id="userName"/>
+							<input type="button" class="button" value="查询" onClick="javascript:queryUsers();"/>
+						</div>
 					</div>
 					<!-- End Box Head -->	
 

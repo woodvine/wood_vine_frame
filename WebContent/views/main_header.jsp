@@ -18,16 +18,40 @@
 	var user = ${currentUser};
 	var userName = '';
 	$(document).ready(function(){
+		//顶端的操作连接		
+		loadToolbar();
+		//真正的菜单
+		loadMenus(authoritys);
+	});
+	
+	function loadToolbar(){
+		var flag = true;
 		if(user==null||user.userName==null||user.userName==''){
-			userName = '新朋友';
 		}else{
 			//显示用户操作
 			userName = user.userName;
+			flag = false;
 		}
+		
 		var titleStr = userName+' 您好，今天是' + getSystemcnLongDate();
-		$("#systemmessage").html(titleStr);
-		loadMenus(authoritys);
-	});
+		var toolBar = '';
+		if(flag){
+			toolBar +='<strong >'+titleStr+'</strong>';
+			toolBar +='<span>&nbsp;|&nbsp;</span>';
+			toolBar +='<a href="javascript:login();">登陆</a>';
+		}else{
+			toolBar +='<strong >'+titleStr+'</strong>';
+			toolBar +='<span>&nbsp;|&nbsp;</span>';
+			toolBar +='<a href="#">修改密码</a>';
+			/* toolBar +='<span>&nbsp;|&nbsp;</span>';
+			   toolBar +='<a href="#">头像设置</a>'; 
+			*/
+			toolBar +='<span>&nbsp;|&nbsp;</span>';
+			toolBar +='<a href="javascript:loginout();">退出</a>';
+		}
+		
+		$("#top-navigation").html(toolBar);
+	}
 	
 	function loadMenus(authoritys){
 		//初始化菜单
@@ -68,7 +92,37 @@
 	}
 	
 	function login(){
-		window.location.href = "views/login.jsp";
+		if(window.parent.frames.length >0) {
+			window.parent.document.location.href = "views/login.jsp";
+		}else{
+			document.location.href = "views/login.jsp";
+		}
+	}
+	
+	function loginout(){
+		$.ajax({
+			type : 'POST',
+			url : path+'logout', //通过url传递name参数
+			data : {
+				},
+			dataType : 'json',
+			success:function(data){
+				if(data.status){
+					//跳转到登陆页面
+					if(window.parent.frames.length >0) {
+						window.parent.document.location.href = path+"welcome.jsp";
+					}else{
+						document.location.href = path+"welcome.jsp";
+					}
+					
+				}else{
+					$("#resultMsg").text(data.description);
+				}
+			},
+			error:function(e){
+				alert("Net error ,try later.")
+			}
+		});
 	}
 </script>
 <body>
@@ -77,17 +131,8 @@
 	<div class="shell">
 		<!-- Logo + Top Nav -->
 		<div id="top">
-			<h1>WoodVine——爱上生活,简单幸福！</h1>
+			<h1>WoodVine——爱上生活,收录简单幸福！</h1>
 			<div id="top-navigation">
-				<strong id="systemmessage"></strong>
-					<span>|</span>
-					<a href="#">修改密码</a>
-					<span>|</span>
-					<a href="#">头像设置</a>
-					<span>|</span>
-					<a href="#">退出</a>
-					<span>|</span>
-					<a href="javascript:login();">登陆</a>
 			</div>
 		</div>
 		<!-- End Logo + Top Nav -->

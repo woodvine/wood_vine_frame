@@ -48,13 +48,19 @@
 					userPwd:userPwd,
 					userName:userName,
 					email:email,
-					nickname:$("#nickname").val()
+					nickname:$("#nickname").val(),
+					status:1
 					},
 				dataType : 'json',
 				success:function(data){
 					if(data.status){
 						//跳转到登陆页面
-						window.location.href="login.jsp";
+						if(window.parent.frames.length >0) {
+							window.parent.document.location.href = "views/login.jsp";
+						}else{
+							document.location.href = "views/login.jsp";
+						}
+						
 					}else{
 						$("#resultMsg").text(data.description);
 					}
@@ -70,7 +76,7 @@
 		}
 	</script>
 	
-	<body>
+	<body class="shell" onkeydown="if(event.keyCode == 13){sumbit();}">
 		<!-- Box -->
 		<div class="box">
 			<!-- Box Head -->
@@ -82,34 +88,34 @@
 			<form action="" method="post">
 				<!-- Form -->
 				<div class="form">
-					<span class="req">max 100 symbols</span>
+					<span class="req">不能为空,最长30个字符</span>
 					<label>登陆名: <span style="color:red;" id="msgLoginName">(系统登陆账号:必填)</span></label>
-					<input type="text" class="field size1" id="loginName"/>
+					<input maxlength="30" type="text" class="field size4" id="loginName"/>
 					
-					<span class="req">max 100 symbols</span>
+					<span class="req">不能为空,最长30个字符</span>
 					<label>密&nbsp;码 :<span style="color:red;" id="msgPwd">(必填)</span></label>
-					<input type="password" class="field size1" id="userPwd"/>
+					<input maxlength="30" type="password" class="field size4" id="userPwd"/>
 					
-					<span class="req">max 100 symbols</span>
+					<span class="req">不能为空,最长50个字符</span>
 					<label>用户名: <span style="color:red;" id="msgUserName">(标识您的身份的:必填)</span></label>
-					<input type="text" class="field size1" id="userName"/>
+					<input maxlength="50" type="text" class="field size4" id="userName"/>
 					
-					<span class="req">max 100 symbols</span>
+					<span class="req">最长30个字符</span>
 					<label>昵&nbsp;称: <span style="color:red;" id="msgNickName">(选填)</span></label>
-					<input type="text" class="field size1" id="nickname"/>
+					<input maxlength="30" type="text" class="field size4" id="nickname"/>
 					
-					<span class="req">max 100 symbols</span>
+					<span class="req">不能为空,最长100个字符</span>
 					<label>邮&nbsp;箱 :<span style="color:red;" id="msgEmail">(密码找回使用:必填)</span></label>
-					<input type="text" class="field size1" id="email"/>
+					<input maxlength="100" type="text" class="field size4" id="email"/>
 					<br/>
 					<h2><span id="resultMsg" style="color:red;"></span></h2>
 				</div>
 				<!-- End Form -->
 				
 				<!-- Form Buttons -->
-				<div class="buttons">
-					<input type="button" onClick="sumbit();" class="button" value="注册" />
-					<input type="button" onClick="cancle();" class="button" value="取消" />
+				<div>
+					<input type="button" onClick="sumbit();" class="registerBtn" value="注册" />
+					<input type="button" onClick="cancle();" class="registerBtn" value="取消" />
 				</div>
 				<!-- End Form Buttons -->
 			</form>

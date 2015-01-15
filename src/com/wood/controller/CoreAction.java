@@ -2,12 +2,15 @@ package com.wood.controller;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wood.service.MsgService;
 import com.wood.util.SignUtil;
 
 /**
@@ -21,6 +24,7 @@ import com.wood.util.SignUtil;
  */
 @Controller
 public class CoreAction {
+	private MsgService wxMsgService;
 	
 	/**
 	 * GET请求：进行URL、Tocken 认证；
@@ -29,7 +33,7 @@ public class CoreAction {
 	 * 3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
 	 * 这里可以添加多个账户，不同的account/tocken，提供给微信平台，只要验证通过即可
 	 */
-	@RequestMapping(value = "/sign",  method = RequestMethod.GET)
+	@RequestMapping(value = "/{account}/wxapi",  method = RequestMethod.GET)
 	@ResponseBody
 	public String doGet(HttpServletRequest request) {
 		String token = "helloworld";
@@ -42,6 +46,15 @@ public class CoreAction {
 			return echostr;
 		}
 		return "error";
+	}
+	
+	
+	@RequestMapping(value = "/{account}/wxapi",produces = {"text/xml;charset=UTF-8"}, method = RequestMethod.POST)
+	public @ResponseBody String doPost(HttpServletRequest request,@PathVariable String account,HttpServletResponse response) {
+		//处理用户和微信公众账号交互消息
+		String appId = null;
+		String appSecret = null;
+		return wxMsgService.processMsg(request,appId,appSecret);
 	}
 	
 	public static void main(String[] args) {

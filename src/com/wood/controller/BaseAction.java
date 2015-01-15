@@ -32,17 +32,54 @@ public class BaseAction {
 	private UserService userService;
 	
 	/**
+	 * 登陆
+	 * @param loginName
+	 * @param userPwd
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/login")
+	public ModelAndView login(String loginName,String userPwd,HttpSession session){
+		ModelAndView view =  new ModelAndView("/login");
+		ActionResponse response = userService.login(loginName, userPwd);
+		if(response.isStatus()){
+			view = new ModelAndView("main");
+			session.setAttribute(SystemConstant.CURRENT_USER,response.getResult());
+		}else{
+			view.addObject("msg", response.getDescription());
+		}
+		
+		return view;
+	}
+	
+	/**
+	 * 退出
+	 * @param loginName
+	 * @param userPwd
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/logout")
+	@ResponseBody
+	public ActionResponse logout(HttpSession session){
+		session.setAttribute(SystemConstant.CURRENT_USER,null);
+		ActionResponse response = new ActionResponse();
+		response.setStatus(true);
+		return response;
+	}
+	
+	/**
 	 * 跳转到注册页面
 	 * @return
 	 */
 	@RequestMapping(value="/toRegister")
-	public ModelAndView register(){
+	public ModelAndView toRegister(){
 		ModelAndView view =  new ModelAndView("/base_user_add");
 		return view;
 	}
 	
 	/**
-	 * 注册结果返回，由页面选择跳转或不予处理
+	 * 提交注册
 	 * @param user
 	 * @return
 	 */
@@ -75,20 +112,17 @@ public class BaseAction {
 		return userService.queryByPage(user);
 	}
 	
-	@RequestMapping(value="/login")
-	public ModelAndView login(String loginName,String userPwd,HttpSession session){
-		ModelAndView view =  new ModelAndView("/login");
-		ActionResponse response = userService.login(loginName, userPwd);
-		if(response.isStatus()){
-			view = new ModelAndView("main");
-			session.setAttribute(SystemConstant.CURRENT_USER,response.getResult());
-		}else{
-			view.addObject("msg", response.getDescription());
-		}
-		
-		return view;
+	/**
+	 * 注册结果返回，由页面选择跳转或不予处理
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value="/modifyUserInfo")
+	@ResponseBody
+	public ActionResponse modifyUserInfo(TbUser user){
+		return userService.modifyUserInfo(user);
 	}
-
+	
 	@RequestMapping(value="/header")
 	public ModelAndView header(HttpSession session){
 		ModelAndView view = new ModelAndView("main_header");
@@ -107,12 +141,6 @@ public class BaseAction {
 		return view;
 	}
 	
-	@RequestMapping(value="/content")
-	public ModelAndView content(){
-		ModelAndView view = new ModelAndView("main_content");
-		return view;
-	}
-
 	@RequestMapping(value="/footer")
 	public ModelAndView footer(){
 		ModelAndView view = new ModelAndView("main_footer");
