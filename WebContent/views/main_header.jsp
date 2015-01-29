@@ -42,7 +42,7 @@
 		}else{
 			toolBar +='<strong >'+titleStr+'</strong>';
 			toolBar +='<span>&nbsp;|&nbsp;</span>';
-			toolBar +='<a href="#">修改密码</a>';
+			toolBar +='<a href="javascript:changePwd();">修改密码</a>';
 			/* toolBar +='<span>&nbsp;|&nbsp;</span>';
 			   toolBar +='<a href="#">头像设置</a>'; 
 			*/
@@ -124,6 +124,16 @@
 			}
 		});
 	}
+	
+	function changePwd(){
+		//导航为首页
+		$("#menusUl >li >a").removeClass()
+		//重置选中菜单的样式
+		$("#menusUl >li >a").eq(0).addClass("active");
+		//操作区域定位到修改密码
+		self.parent.frames["container"].location = path+"views/base_user_update.jsp?id="+user.id;
+	}
+	
 </script>
 <body>
 <!-- Header -->
@@ -146,6 +156,5 @@
 	</div>
 </div>
 <!-- End Header -->
-	
 </body>
 </html>

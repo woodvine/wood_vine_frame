@@ -90,7 +90,16 @@ function nowAsString(){
 	return str;
 }
 
-
+function formatValue(value){
+	if(value==null){
+		return "";
+	}
+	
+	if(value.length<30){
+		return value;
+	}
+	return value.substr(0,30)+"...";
+}
 
 function getRole(code){
 	var val ;

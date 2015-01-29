@@ -24,7 +24,7 @@ public class TbUser extends PaginationBean
 	private String createTime;
 	private String email;
 	private Integer groupId;
-	private String id;
+	private Integer id;
 	private String lastLoginTime;
 	private String loginName;
 	private String nickname;
@@ -33,6 +33,15 @@ public class TbUser extends PaginationBean
 	private Integer status;
 	private String userName;
 	private String userPwd;
+	private String userOldPwd;
+	public String getUserOldPwd() {
+		return userOldPwd;
+	}
+
+	public void setUserOldPwd(String userOldPwd) {
+		this.userOldPwd = userOldPwd;
+	}
+
 	private Integer roleId;
 
 	// Constructors
@@ -50,7 +59,7 @@ public class TbUser extends PaginationBean
 	}
 
 	/** minimal constructor */
-	public TbUser(String id) {
+	public TbUser(Integer id) {
 		this.id = id;
 	}
 
@@ -66,7 +75,7 @@ public class TbUser extends PaginationBean
 		return this.groupId;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
@@ -114,7 +123,7 @@ public class TbUser extends PaginationBean
 		this.groupId = groupId;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

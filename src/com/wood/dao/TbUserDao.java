@@ -20,6 +20,10 @@ import com.wood.util.StringUtil;
  * 
  * @title       :TbUserDao
  * @description :user dao
+ * 				备注：20150115
+ *              可以不继承SqlMapClientDaoSupport，直接用sqlMapClient的方法
+ *              如果要使用模板，可以定义模板bean，设置器sqlMapClient属性就OK了。
+ *              这个过时的类，总是看着很别扭。。。。。。。不用也罢
  * @update      :2015-1-6 上午11:27:19
  * @author      :wang_ll
  * @version     :1.0.0
@@ -165,7 +169,21 @@ public class TbUserDao  extends SqlMapClientDaoSupport{
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Map<String,String> queryAboutMe(){
-		return (Map)this.getSqlMapClientTemplate().queryForObject("baseSql.queryAboutMe");
+		return (Map<String, String>)this.getSqlMapClientTemplate().queryForObject("baseSql.queryAboutMe");
+	}
+
+	public TbUser queryById(Integer user) {
+		if(user==null){
+			return null;
+		}
+		
+		try {
+			return (TbUser)this.getSqlMapClientTemplate().queryForObject("baseSql.queryUserById",user);
+		} catch (Exception e) {
+			logger.error("TbUserDao queryUserById error", e);
+			return null;
+		}
 	}
 }

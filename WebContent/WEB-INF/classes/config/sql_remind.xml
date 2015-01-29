@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="remind">
+	<typeAlias alias="TbDiary" type="com.wood.model.TbDiary" />
+	<insert id="addDiary" parameterClass="TbDiary">
+		INSERT INTO tb_diary(TYPE,create_time,content,author,title)
+		values(#type#,UNIX_TIMESTAMP(),#content#,#author#,#title#) 
+	</insert>
+	
+	<delete id="deleteDiary" parameterClass="int">
+		delete from tb_diary where id=#id#
+	</delete>
+	
+	<select id="queryDiaryById" parameterClass="int" resultClass="TbDiary">
+	  SELECT 	id, 
+		TYPE , 
+		content , 
+		author , 
+		title, 
+		FROM_UNIXTIME(create_time) AS createTime
+		FROM tb_diary 
+		where id=#id#
+		LIMIT 0,1
+	</select>
+	
+	<update id="updateDiary" parameterClass="TbDiary" >
+	  update tb_diary set id=#id# 
+		<isNotEmpty  prepend="," property="title">
+	 		  title =#title#
+        </isNotEmpty >
+		<isNotEmpty  prepend="," property="content">
+	 		  content =#content#
+        </isNotEmpty >
+		<isNotNull  prepend="," property="type">
+	 		  type =#type#
+        </isNotNull >
+        where id=#id#
+	</update>
+	
+	<select id="queryDiaryByPage" parameterClass="TbDiary" resultClass="TbDiary">
+ 	    SELECT 	id, 
+		TYPE , 
+		content , 
+		author , 
+		title, 
+		FROM_UNIXTIME(create_time) AS createTime
+		FROM tb_diary 
+		where 1=1
+		<isNotNull prepend=" and " property="author">
+			author =#author#
+		</isNotNull>
+		<isNotNull prepend=" and " property="type">
+			type =#type#
+		</isNotNull>
+		<isNotEmpty prepend=" and " property="createTime">
+			<![CDATA[
+	 	 	to_days(create_time)=to_days(#createTime#)
+	 		]]>
+		</isNotEmpty>
+		LIMIT #rowStart#,#pageSize#
+ 	</select>
+ 	
+	<select id="queryDiaryCount" parameterClass="TbDiary" resultClass="int">
+ 	    SELECT 	count(*)
+		FROM tb_diary 
+		where 1=1
+		<isNotNull prepend=" and " property="author">
+			author =#author#
+		</isNotNull>
+		<isNotNull prepend=" and " property="type">
+			type =#type#
+		</isNotNull>
+		<isNotEmpty prepend=" and " property="createTime">
+			<![CDATA[
+	 	 	to_days(create_time)=to_days(#createTime#)
+	 		]]>
+		</isNotEmpty>
+		
+ 	</select>
+</sqlMap> 

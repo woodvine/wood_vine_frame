@@ -119,8 +119,11 @@ public class BaseAction {
 	 */
 	@RequestMapping(value="/modifyUserInfo")
 	@ResponseBody
-	public ActionResponse modifyUserInfo(TbUser user){
-		return userService.modifyUserInfo(user);
+	public ActionResponse modifyUserInfo(TbUser user,Integer modifyType){
+		if(modifyType==null){
+			modifyType = SystemConstant.CHANGE_INFO;
+		}
+		return userService.modifyUserInfo(user,modifyType);
 	}
 	
 	@RequestMapping(value="/header")

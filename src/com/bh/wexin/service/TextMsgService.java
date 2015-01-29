@@ -8,7 +8,7 @@ import com.bh.wexin.bean.request.MsgType;
 import com.bh.wexin.bean.response.ResponseTextMsg;
 
 @Service
-public class TextMsgService extends AMsgService{
+public class TextMsgService extends AMsgHandler{
 	
 	private MsgType msgType = MsgType.text;
 	
@@ -23,5 +23,5 @@ public class TextMsgService extends AMsgService{
 	public MsgType getMsgType() {
 		return msgType;
 	}
-
+	
 }

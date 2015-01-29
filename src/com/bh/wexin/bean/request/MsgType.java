@@ -30,6 +30,25 @@ public enum MsgType {
 	}
 	
 	public static void main(String[] args){
-		System.out.println(MsgType.text);
+		System.out.println(getMsgType("text"));
+	}
+
+	/**
+	 * 根据消息类型查找枚举类实例
+	 * @param msgType
+	 * @return
+	 */
+	public static MsgType getMsgType(String msgType) {
+		if(msgType==null){
+			return null;
+		}
+		
+		MsgType[] types = MsgType.values();
+		for(MsgType type:types){
+			if(type.name.equals(msgType)){
+				return type;
+			}
+		}
+		return null;
 	}
 }

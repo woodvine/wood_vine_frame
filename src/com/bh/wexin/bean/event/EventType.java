@@ -27,4 +27,18 @@ public enum EventType {
 	public String toString(){
 		return this.name;
 	}
+
+	public static EventType getEventType(String msgType) {
+		if(msgType==null){
+			return null;
+		}
+		
+		EventType[] types = EventType.values();
+		for(EventType type:types){
+			if(type.name.equals(msgType)){
+				return type;
+			}
+		}
+		return null;
+	}
 }

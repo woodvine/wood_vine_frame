@@ -366,6 +366,11 @@ a.edit {
 	margin-left: 14px;
 }
 
+a.add {
+	background-image: url(./../images/edit.gif);
+	margin-left: 14px;
+}
+
 .form {
 	padding: 15px 10px 5px 10px;
 }
@@ -608,6 +613,7 @@ textarea.size1 {
 	cursor: pointer;
 }
 
+
 .info{
 	width: 988px;
 	margin: 0 auto;
@@ -615,11 +621,6 @@ textarea.size1 {
 	font-size: 18px;
 }
 
-.registerBtn{
-	margin-top: 0px;
-	margin-bottom: 10px;
-	margin-left: 15px;
-	background: #eee;
-	width: 70px;
-	cursor: pointer;
+.add{
+	background: url(./../images/add-button.gif) no-repeat 0 0;
 }

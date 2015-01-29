@@ -1,5 +1,7 @@
 package com.bh.wexin.bean.request;
 
-public class RequestTextMsg {
+import com.bh.wexin.bean.RequestMsg;
+
+public class RequestTextMsg extends RequestMsg{
 
 }

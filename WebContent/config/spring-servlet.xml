@@ -19,6 +19,8 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="com.wood.controller" />
 	<context:component-scan base-package="com.wood.dao" />
+	<context:component-scan base-package="com.bh.wexin.service" />
+	<context:component-scan base-package="com.bh.wexin.action" />
 	<!-- 添加自动代理功能 -->  
     <aop:aspectj-autoproxy proxy-target-class="true"/>  
   
@@ -63,6 +65,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/views/" p:suffix=".jsp"/>
 	
 	<bean id="com.wood.service.define.UserService" class="com.wood.service.impl.UserServiceImp"/>
+	<bean id="com.wood.service.define.DiaryService" class="com.wood.service.impl.DiaryServiceImp"/>
 	
 	<!--放过/resource下的静态文件-->
 	<mvc:resources mapping="/resource/**" location="/resource/"/>

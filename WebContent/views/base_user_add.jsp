@@ -109,13 +109,14 @@
 					<input maxlength="100" type="text" class="field size4" id="email"/>
 					<br/>
 					<h2><span id="resultMsg" style="color:red;"></span></h2>
+					<br/>
 				</div>
 				<!-- End Form -->
 				
 				<!-- Form Buttons -->
-				<div>
-					<input type="button" onClick="sumbit();" class="registerBtn" value="注册" />
-					<input type="button" onClick="cancle();" class="registerBtn" value="取消" />
+				<div class="buttons">
+					<input type="button" onClick="sumbit();" class="button" value="注册" />
+					<input type="button" onClick="cancle();" class="button" value="取消" />
 				</div>
 				<!-- End Form Buttons -->
 			</form>

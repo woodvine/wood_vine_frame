@@ -21,4 +21,7 @@ public class ResponseTextMsg extends ResponseMsg{
 		this.content = content;
 	}
 
+	public String toString(){
+		return this.getContent();
+	}
 }

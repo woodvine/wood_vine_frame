@@ -47,6 +47,23 @@
 		FROM tb_user where login_name=#loginName# LIMIT 1
  	</select>
  	
+ 	<!-- 根据用户登陆名称查找用户信息：用户登录时使用 -->
+ 	<select id="queryUserById" parameterClass="int" resultClass="TbUser">
+ 		SELECT 	id, 
+		login_name AS loginName, 
+		user_name AS userName, 
+		user_pwd AS userPwd, 
+		old_pwd AS userOldPwd, 
+		pic_url AS picUrl, 
+		email , 
+		nickname , 
+		STATUS AS status, 
+		role_id AS roleId, 
+		FROM_UNIXTIME(create_time) AS createTime, 
+		FROM_UNIXTIME(last_login_time) AS lastLoginTime
+		FROM tb_user where id=#id# LIMIT 1
+ 	</select>
+ 	
  	<!-- 根据用户登陆名称判断用户是否存在 ：用户注册时校验-->
  	<select id="isUserExist" parameterClass="string" resultClass="int">
  		SELECT count(*)
