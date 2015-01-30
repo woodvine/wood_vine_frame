@@ -39,8 +39,17 @@ public class BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value="/login")
-	public ModelAndView login(String loginName,String userPwd,HttpSession session){
+	public ModelAndView login(String validateCode,String loginName,String userPwd,HttpSession session){
 		ModelAndView view =  new ModelAndView("/login");
+		
+		//验证码验证
+		String savedValidateCode = (String)session.getAttribute("validateCode");
+		if(savedValidateCode==null||!savedValidateCode.equalsIgnoreCase(validateCode)){
+			view.addObject("msg","验证码错误!");
+			return view;
+		}
+		
+		//登陆验证
 		ActionResponse response = userService.login(loginName, userPwd);
 		if(response.isStatus()){
 			view = new ModelAndView("main");
