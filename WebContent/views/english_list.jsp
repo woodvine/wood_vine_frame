@@ -21,7 +21,7 @@
 		function queryList(){
 			$.ajax({
 				type : 'POST',
-				url : path+'queryDiaryList', //通过url传递name参数
+				url : path+'queryEnglishList', //通过url传递name参数
 				data : {
 					    author:author,
 						page:_currentPage,
@@ -48,7 +48,7 @@
 			var content = "";
 			if(list!=null&&list.length>0){
 				for(var i = 0;i<list.length;i++){
-					var diary = list[i];
+					var English = list[i];
 					//奇偶交错样式
 					if(i%2==0){
 						content+="<tr>";
@@ -56,19 +56,20 @@
 						content+="<tr class='odd'>";
 					}
 					
-					var type = diary.type;
+					var type = English.type;
 					var typeText = '';
 					if(type==1){
-						typeText = '日志';
+						typeText = '单词';
 					}else{
-						typeText = '备忘';
+						typeText = '句子';
 					}
-					content+="<td><input type='checkbox' class='checkbox' value='"+diary.id+"'/></td>";
+					
 					content+="<td>"+typeText+"</td>";
-					content+="<td>"+formatValue(diary.title)+"</td>";
-					content+="<td>"+formatValue(diary.content)+"</td>";
-					content+="<td>"+formatValue(diary.createTime)+"</td>";
-					content+='<td>'+formatOperation(diary)+'</td>';
+					content+="<td>"+formatValue(English.content)+"</td>";
+					content+="<td>"+formatValue(English.chinese)+"</td>";
+					content+="<td>"+formatValue(English.description)+"</td>";
+					/* content+="<td>"+formatValue(English.createTime)+"</td>"; */
+					content+='<td>'+formatOperation(English)+'</td>';
 					content+="</tr>";
 				}
 			}
@@ -76,25 +77,25 @@
 		}
 		
 		//操作连接拼接
-		function formatOperation(diary){
+		function formatOperation(English){
 			var str = '';
-			str+= "<a class='ico del' href='javascript:deleteDiary(\""+diary.id+"\");'>删除</a>";
-			str+="<a class='ico edit' href='javascript:showDetail(\""+diary.id+"\");'>详情</a>";
+			str+= "<a class='ico del' href='javascript:deleteEnglish(\""+English.id+"\");'>删除</a>";
+			str+="<a class='ico edit' href='javascript:showDetail(\""+English.id+"\");'>详情</a>";
 			return str;
 		}
 		
 		function add(){
-			window.location.href=path+"/views/diary_add.jsp?author="+author;
+			window.location.href=path+"/views/english_add.jsp?author="+author;
 		}
 		
 		function showDetail(id){
-			window.location.href=path+"/views/diary_add.jsp?id="+id;
+			window.location.href=path+"/views/english_add.jsp?id="+id;
 		}
 		
-		function deleteDiary(id){
+		function deleteEnglish(id){
 			$.ajax({
 				type : 'POST',
-				url : path+'deleteDiary', //通过url传递name参数
+				url : path+'deleteEnglish', //通过url传递name参数
 				data : {
 						id:id
 					},
@@ -119,13 +120,13 @@
 			<div class="box">
 				<!-- Box Head -->
 				<div class="box-head">
-					<h2 class="left">我的记录</h2>
+					<h2 class="left">我的英语词库</h2>
 					<div class="right">
 						<label>查找类型:</label>
 						<select id="queryType" class="field small-field" style="float:left;">
 							<option value="">全部</option>
-							<option value="1">日记</option>
-							<option value="2">备忘</option>
+							<option value="1">单词</option>
+							<option value="2">句子</option>
 						</select>
 						
 						<label style="margin-left:10px;">开始日期</label>
@@ -147,11 +148,10 @@
 							</th>
 						</tr>
 						<tr>
-							<th width="5%"><input type="checkbox" class="checkbox" /></th>
-							<th width="10%">类型</th>
-							<th width="10%">标题</th>
-							<th width="45%">内容</th>
-							<th width="18%">创建时间</th>
+							<th width="5%">类型</th>
+							<th width="30%">内容</th>
+							<th width="28%">释义</th>
+							<th width="25%">说明</th>
 							<th width="12%" class="ac">操作</th>
 						</tr>
 					  </thead>

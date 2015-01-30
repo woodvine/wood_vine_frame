@@ -10,4 +10,5 @@
     <!-- 包含的其他的配置-->
    	<sqlMap resource="config/sql_base.xml"/> 
    	<sqlMap resource="config/sql_remind.xml"/> 
+   	<sqlMap resource="config/sql_english.xml"/> 
 </sqlMapConfig>

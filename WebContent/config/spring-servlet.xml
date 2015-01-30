@@ -66,6 +66,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 	
 	<bean id="com.wood.service.define.UserService" class="com.wood.service.impl.UserServiceImp"/>
 	<bean id="com.wood.service.define.DiaryService" class="com.wood.service.impl.DiaryServiceImp"/>
+	<bean id="com.wood.service.define.EnglishService" class="com.wood.service.impl.EnglishServiceImpl"/>
 	
 	<!--放过/resource下的静态文件-->
 	<mvc:resources mapping="/resource/**" location="/resource/"/>

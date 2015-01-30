@@ -15,9 +15,6 @@
 		//按下回车键自动登录
 		 $("#loginName").focus();
 		 show_Vcode();
-		 $("#change_captcha_img").click(function() {
-			 show_Vcode();
-		});
 	});
 	
 	function login(){

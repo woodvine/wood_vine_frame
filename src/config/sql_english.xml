@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="english">
+	<typeAlias alias="TbEnglish" type="com.wood.model.TbEnglish" />
+	
+	<insert id="addEnglish" parameterClass="TbEnglish">
+		INSERT INTO tb_daily_english(
+			type, 
+			content, 
+			value_cn, 
+			create_time, 
+			value_desc, 
+			author)
+		values(#type#,#content#,#chinese#,UNIX_TIMESTAMP(),#description#,#author#) 
+	</insert>
+	
+	<delete id="deleteEnglish" parameterClass="int">
+		delete from tb_daily_english where id=#id#
+	</delete>
+	
+	<select id="queryEnglishById" parameterClass="int" resultClass="TbEnglish">
+	  SELECT 	id, 
+		type , 
+		content , 
+		author , 
+		value_cn as chinese, 
+		value_desc as description, 
+		FROM_UNIXTIME(create_time) AS createTime
+		FROM tb_daily_english 
+		where id=#id#
+		LIMIT 0,1
+	</select>
+	
+	<update id="updateEnglish" parameterClass="TbEnglish" >
+	  update tb_daily_english set id=#id# 
+		<isNotEmpty  prepend="," property="description">
+	 		  value_desc =#description#
+        </isNotEmpty >
+		<isNotEmpty  prepend="," property="chinese">
+	 		  value_cn =#chinese#
+        </isNotEmpty >
+		<isNotEmpty  prepend="," property="content">
+	 		  content =#content#
+        </isNotEmpty >
+		<isNotNull  prepend="," property="type">
+	 		  type =#type#
+        </isNotNull >
+        where id=#id#
+	</update>
+	
+	<select id="queryEnglishByPage" parameterClass="TbEnglish" resultClass="TbEnglish">
+ 	    SELECT 	id, 
+		type , 
+		content , 
+		author , 
+		value_cn as chinese, 
+		value_desc as description, 
+		FROM_UNIXTIME(create_time) AS createTime
+		FROM tb_daily_english 
+		where 1=1
+		<isNotNull prepend=" and " property="author">
+			author =#author#
+		</isNotNull>
+		<isNotNull prepend=" and " property="type">
+			type =#type#
+		</isNotNull>
+		<isNotEmpty prepend=" and " property="createTime">
+			<![CDATA[
+	 	 	to_days(create_time)=to_days(#createTime#)
+	 		]]>
+		</isNotEmpty>
+		LIMIT #rowStart#,#pageSize#
+ 	</select>
+ 	
+	<select id="queryEnglishCount" parameterClass="TbEnglish" resultClass="int">
+ 	    SELECT 	count(*)
+		FROM tb_daily_english 
+		where 1=1
+		<isNotNull prepend=" and " property="author">
+			author =#author#
+		</isNotNull>
+		<isNotNull prepend=" and " property="type">
+			type =#type#
+		</isNotNull>
+		<isNotEmpty prepend=" and " property="createTime">
+			<![CDATA[
+	 	 	to_days(create_time)=to_days(#createTime#)
+	 		]]>
+		</isNotEmpty>
+ 	</select>
+ 	
+	<select id="queryDailyGood" resultClass="java.util.HashMap" parameterClass="int">
+ 	    SELECT 	content,author,chinese
+		FROM tb_daily_good 
+		where id=#id#
+		limit 0,1
+ 	</select>
+ 	
+	<select id="queryDailyGoodCount" resultClass="int">
+ 	    SELECT 	count(*) FROM tb_daily_good 
+ 	</select>
+ 	
+</sqlMap> 
