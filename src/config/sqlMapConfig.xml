@@ -4,11 +4,30 @@
  " http://ibatis.apache.org/dtd/sql-map-config-2.dtd " >
 
 <sqlMapConfig>
-  <settings cacheModelsEnabled="true" enhancementEnabled="true" lazyLoadingEnabled="true" maxRequests="20" maxSessions="10"
-		maxTransactions="50" useStatementNamespaces="true" />
+	<!-- properties可以定义属性文件，然后改文件中可以引用properties文件的属性值 -->
+  	
+  	
+  	<!-- 
+  		settings 该属性用于配置和优化SqlMapClient实例的各选项
+  		maxRequests 默认值是512，通常应该至少是maxTransactions的10倍，且大于maxSessions
+  		maxSessions 缺省值是128，同一时间内活动的连接数的最大值，它应该总数大于等于maxTransactions
+  		maxTransactions 缺省值是32，同时进入startTransaction()操作的最大线程数
+  		useStatementNamespaces 缺省值是false,
+  					当为true时，在引用sqlMap的statement时必须以namespace.statment引用
+  	 -->
+  	<settings 
+  		cacheModelsEnabled="true" 
+  		enhancementEnabled="true" 
+  		lazyLoadingEnabled="true" 
+  		maxRequests="20" 
+  		maxSessions="10"
+		maxTransactions="50" 
+		useStatementNamespaces="true" />
 		
+	
     <!-- 包含的其他的配置-->
    	<sqlMap resource="config/sql_base.xml"/> 
    	<sqlMap resource="config/sql_remind.xml"/> 
    	<sqlMap resource="config/sql_english.xml"/> 
+   	<sqlMap resource="config/sql_scrawl.xml"/> 
 </sqlMapConfig>

@@ -131,7 +131,7 @@
 	VALUES(#loginName#, #userName#, #userPwd#, #nickname#, #picUrl#, #email#, #status#, #roleId#, UNIX_TIMESTAMP(),UNIX_TIMESTAMP())
  	</insert>
  	
- 	<select id="queryAboutMe" resultClass="java.util.HashMap">
+ 	<select id="queryAboutMe" resultClass="hashmap">
 		SELECT 	 
 		NAME as name, 
 		birthday as birthday, 

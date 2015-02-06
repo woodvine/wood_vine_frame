@@ -9,6 +9,7 @@
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<title>Welcome to WoodVine</title>
 	<link rel="stylesheet" href="<%=basePath%>resource/css/style.css" type="text/css" media="all" />
+	<link rel="icon" href="<%=basePath%>resource/images/msg-ok.gif" type="image/gif" >
 	<script type="text/javascript" src="<%=basePath%>resource/js/DateFormat.js"></script>
 	<script type='text/javascript' src="<%=basePath%>resource/js/jquery-1.8.2.min.js"></script>
 </head>

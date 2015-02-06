@@ -10,31 +10,41 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:config/jdbc_bae.properties</value>
+				<value>classpath:config/jdbc_dev.properties</value>
 			</list>
 		</property>
 	</bean>
     
     <!-- 配置数据源信息 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<!-- JDBC链接属性 -->
 		<property name="driverClass"><value>${driverClass}</value></property>
 		<property name="jdbcUrl" ><value>${jdbcUrl}</value></property>
 		<property name="user" ><value>${user}</value></property>
 		<property name="password"><value>${password}</value></property>
+		
+		<!-- 以下是连接池相关的属性 -->
+		
 		<!-- 指定连接数据库连接池的最小连接数 -->
 		<property name="minPoolSize" value="10" />
 		<!-- 指定连接数据库连接池的最大连接数 -->
 		<property name="maxPoolSize" value="10" />
+		<property name="maxStatements" value="0" />
+		
+		<!-- 连接最大空闲时间单位s，一旦超过则丢弃：默认为0，永不丢弃 -->
+		<property name="maxIdleTime" value="1800" />
         <property name="maxIdleTimeExcessConnections" value="150"/> 
 		
 		<!-- 指定连接数据库连接池的连接的最大空闲时间 -->
-		<property name="maxIdleTime" value="1800" />
+		
+		<!-- 当池中没有可用连接时，进行扩展时一次获取的连接数 -->
 		<property name="acquireIncrement" value="2" />
-		<property name="maxStatements" value="0" />
+		<property name="acquireRetryAttempts" value="30" />
+		
+		
 		<!-- 指定连接数据库连接池的初始化连接数 -->
 		<property name="initialPoolSize" value="3" />
 		<property name="idleConnectionTestPeriod" value="1800" />
-		<property name="acquireRetryAttempts" value="30" />
 		<property name="breakAfterAcquireFailure" value="true" />
 		<property name="testConnectionOnCheckin" value="false"/>
   		<property name="testConnectionOnCheckout" value="true"/>

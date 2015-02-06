@@ -21,7 +21,7 @@ import com.wood.model.TbDiary;
  */
 @Repository
 public class TbDiaryDao {
-private Logger logger = Logger.getLogger(TbDiaryDao.class.getName());
+	private Logger logger = Logger.getLogger(TbDiaryDao.class.getName());
 	
 	@Resource(name = "sqlMapClient")
 	private SqlMapClient sqlMapClient;

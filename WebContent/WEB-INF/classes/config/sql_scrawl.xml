@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="scrawl">
+	<typeAlias alias="ScrawlData" type="com.wood.model.TbScrawlData" />
+	<typeAlias alias="TbCsdnBlog" type="com.wood.model.TbCsdnBlog" />
+	
+	<!-- 插入待 爬取的链接-->
+	<insert id="insertScrawlData" parameterClass="ScrawlData">
+		INSERT INTO tb_scrawl_data(hash_code,url,TYPE,status,create_time)
+		values(#hashCode#,#url#,#type#,#status#,UNIX_TIMESTAMP()) 
+	</insert>
+	
+	<!-- 插入待 爬取的链接-->
+	<insert id="insertCsdnBlog" parameterClass="TbCsdnBlog">
+		INSERT INTO tb_scrawl_blog (author,category,postdate,title,content)
+		VALUES (#author#,#category#,#postdate#,#title#,#content#)
+	</insert>
+	
+	<!-- 网页爬取成功操作：更新内容和状态 -->
+	<update  id="updateScrawlData" parameterClass="ScrawlData">
+		update tb_scrawl_data set status=#status#
+		<isNotEmpty prepend="," property="content">
+			<![CDATA[
+				content=#content#
+			]]>
+		</isNotEmpty>
+		where id=#id#
+	</update>
+	
+	<!-- 批量更新记录：使用iterate标签完成 -->
+	<update id="updateScrawlBatched" parameterClass="list">
+	   <iterate conjunction="">
+	   <![CDATA[
+			update tb_scrawl_data set status=#[].status# , content=#[].content#
+			where id=#[].id#;
+		]]>
+		</iterate>
+	</update>
+	
+	<update id="updateMediumStatus" >
+		update tb_scrawl_data set status=2
+		where id=#id#;
+	</update>
+	
+	<!-- 批量插入新解析的记录：使用iterate标签完成 insert into t value() (),()-->
+	<insert id="insertScrawlBatched" parameterClass="list">
+	    insert  INTO tb_scrawl_data(hash_code,url,TYPE,status,create_time) values
+	    <iterate conjunction=",">
+	    	<![CDATA[(#[].hashCode#,#[].url#,#[].type#,1,UNIX_TIMESTAMP())]]>
+	    </iterate>
+	</insert>
+	
+	<!-- 批量更新记录：使用iterate标签完成 网上拷贝的代码里面有看不见的空格导致拼接错误了。。。-->
+	<update id="updateMediumBatched" parameterClass="list">
+			update tb_scrawl_data set status=2 where id in 
+			<iterate conjunction="," open="(" close=")">
+				#[]#
+			</iterate>
+	</update>
+	
+	<!-- 根据散列值查询URL是否存在 -->
+	<select id="queryByHash" resultClass="ScrawlData">
+		select hash_code as hashCode,url from tb_scrawl_data 
+		where hash_code=#hashCode#
+	</select>
+	
+	<!-- 查询待采集的记录 -->
+	<select id="queryNewlyData" resultClass="ScrawlData">
+		select id,hash_code as hashCode,url ,status ,type
+		from tb_scrawl_data 
+		where status=1
+		limit #count#
+	</select>
+	
+	<!-- 查询待采集的记录 -->
+	<select id="queryTimeoutData" resultClass="ScrawlData">
+		select id,hash_code as hashCode,url ,status ,type
+		from tb_scrawl_data 
+		where status=6
+		limit #count#
+	</select>
+	
+	<!-- 当resultClass为xml时，每条查询结果本质上是xml格式的String类型 -->
+	<select id="xmlSearch"  resultClass="xml" xmlResultName="XmlSearch">
+		select id,hash_code as hashCode,url ,status ,type
+		from tb_scrawl_data 
+		where status=3
+		limit #count#
+	</select>
+</sqlMap> 

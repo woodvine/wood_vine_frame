@@ -28,6 +28,9 @@ import com.wood.util.SystemConstant;
  */
 @Controller
 public class BaseAction {
+	/**
+	 * Autowired这个注解是Spring的，默认按类型进行装配的
+	 */
 	@Autowired
 	private UserService userService;
 	
