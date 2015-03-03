@@ -1,0 +1,74 @@
+常量池以外的方法表的分析：OK，把字节码的每一项都弄清楚了。
+00 01 00 07 00  08 00 01 00 09 00 00 00  2F
+00 01 00 01 00 00 00  05 2A B7 00 0A B1 00 00
+00 02 00 0C 00 00 00 06  00 01 00 00 00 03 00 0D
+00 00 00 0C 00 01 00 00  00 05 00 0E 00 0F 00 00
+第一个方法init
+00 01:acc_public
+00 07:name_index <init>
+00 08:descript_index ()V
+00 01:此方法的属性表集合有一项属性
+00 09:code_name_index Code
+是Code的属性表信息
+00 01：attribute_count=1
+00 09：attribute_name_index=0009(<init>)
+00 00 00 2F：attribute_length=47
+属性表长度：从2F以后到下一个方法开始之间总共为47个字节
+00 01：u2 max_stack
+00 01：u2 max_locals
+00 00 00 05：u4 code_length java源程序编译后生成的字节码指令
+随后的code_length字节是Code（字节码指令）
+5个字节码指令流u1类型的字节码指令(2A B7 00 0A B1)
+00 00：u2 exception_table_length
+00 02：u2 attribute_count 2个属性
+属性表
+00 0C：12 LineNumberTable,其后
+00 00 00 06  00 01 00 00 00 03是该属性的信息。
+00 00 00 06 u4:attribute_length,6
+00 01 u2:line_number_table_length 1 
+00 00：start_pc（字节码行号）
+00 03：line_number（Java源码行号）
+
+00 0D：13 LocalVariableTable,其后
+00 00 00 0C 00 01 00 00  00 05 00 0E 00 0F 00 00
+00 01 00 10 00 11 
+是本地变量表属性
+
+
+
+是第一个Method后面的信息
+第二个Method在attribute后面的信息是：
+00 01 00 10 00 11 00 01  00 09 00 00 00 31 00 02
+00 01 00 00 00 07 2A B4  00 12 04 60 AC 00 00 00
+02 00 0C 00 00 00 06 00  01 00 00 00 07 00 0D 00
+00 00 0C 00 01 00 00 00  07 00 0E 00 0F 00 00   
+这个是第二个方法的信息
+00 01：此方法的访问标识为public
+00 10：次方法的名称name_index是16号的常量inc
+00 11：此方法的descriptor_index是17号常量()I
+00 01：次方法的属性集合有一项属性
+00 09：属性name_index 是Code
+00 00 00 31：
+00 02：
+00 01：
+00 00 00 07：
+2A B4  00 12 04 60 AC：
+
+00 00:
+00 02:
+00 0C:
+00 00 00 06:
+00  01 00 00 00 07
+
+00 0D:
+00 00 00 0C:
+随后的12字节：00 01 00 00 00  07 00 0E 00 0F 00 00
+
+
+最后：
+00 01 00 14 00 00 00 02 00  15 
+是attributes相关的属性：
+00 01:attribute count 1
+00 14:attribute_name index 是20是courceFile
+00 00 00 02 :u4是sourceFile属性的attribute_length
+00 15：sourceFileIndex 21是源文件名称TestClass.java
